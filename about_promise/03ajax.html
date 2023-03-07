@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <button class="btn btn-primart" id="btn">send ajax request</button>
+  </div>
+
+  <script>
+    const btn = document.querySelector('#btn')
+    btn.addEventListener('click',function(){
+      new Promise((resolve,reject)=>{
+        // 创建对象
+        const xhr = new XMLHttpRequest();
+        // 初始化
+        xhr.open('GET','https://api.apiopen.top/getJoke');
+        // 发送
+        xhr.send();
+        // 处理响应结果
+        xhr.onreadystatechange=function(){
+          if(xhr.readyState === 4){
+            if(xhr.status >= 200 && xhr.status <300){
+              // 成功 返回响应码
+              resolve(xhr.response);
+            }else{
+              // 失败 返回状态码
+              reject(xhr.status);
+            }
+          }
+        }
+      }).then(
+        // 成功
+        value=>{
+          console.log(value);
+        },
+        // 失败
+        reason=>{
+          console.warn(reason);
+        }
+      )
+    })
+    
+  </script>
+</body>
+</html>
